@@ -25,8 +25,8 @@ const fontHeading = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: "Jabez Collano Works",
-  description: "Portfolio",
+  title: "ComponentCraft | Modern UI Component Library",
+  description: "A premium component library built with shadcn/ui and Aceternity UI for modern web applications",
   keywords: ["component library", "UI components", "React", "Next.js", "shadcn/ui", "Aceternity UI"],
     generator: 'v0.app'
 }
