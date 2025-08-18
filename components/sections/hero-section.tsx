@@ -33,7 +33,7 @@ const itemVariants = {
 
 export function HeroSection() {
   return (
-    <section id="home" className="relative w-full py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 overflow-hidden">
+    <section id="home" className="relative w-full pt-20 pb-8 sm:pt-12 sm:pb-12 md:py-16 lg:py-24 xl:py-32 overflow-hidden">
       <AnimatedBackground variant="gradient" color="rgba(59, 130, 246, 0.08)" secondaryColor="rgba(75, 85, 99, 0.08)" />
 
       <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
