@@ -44,7 +44,7 @@ export default function BookingPage() {
         company: bookingData.company,
         message: bookingData.message,
         timestamp: new Date().toISOString(),
-        timezone: "GMT+08:00 Australia/Perth",
+        timezone: "GMT+08:00 Manila/Philippines",
       }
 
       const response = await fetch("https://n8n.srv834305.hstgr.cloud/webhook/portfolio-website", {
@@ -157,7 +157,7 @@ export default function BookingPage() {
                   </div>
                   <div className="flex items-center gap-1">
                     <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
-                    <span>Australia/Perth (GMT+8)</span>
+                    <span>Manila/Philippines (GMT+8)</span>
                   </div>
                 </div>
               </CardHeader>
@@ -240,7 +240,7 @@ export default function BookingPage() {
                           <div className="text-xs sm:text-sm text-muted-foreground mb-2">Time zone</div>
                           <div className="flex items-center gap-2 text-xs sm:text-sm">
                             <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
-                            <span>GMT+08:00 Australia/Perth (GMT+8)</span>
+                            <span>GMT+08:00 Manila/Philippines (GMT+8)</span>
                           </div>
                         </div>
                       </div>
