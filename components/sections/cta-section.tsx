@@ -15,12 +15,21 @@ export function CtaSection() {
         <ScrollReveal>
           <div className="flex flex-col items-center justify-center space-y-6 text-center">
             <div className="space-y-4">
-              <AnimatedText
-                text="Ready to Automate Your Business?"
-                variant="heading"
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tighter gradient-text break-words hyphens-none"
-                animation="wave"
-              />
+              <div className="space-y-1">
+                <AnimatedText
+                  text="Ready to Automate"
+                  variant="heading"
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tighter gradient-text block"
+                  animation="wave"
+                />
+                <AnimatedText
+                  text="Your Business?"
+                  variant="heading"
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tighter gradient-text block"
+                  animation="wave"
+                  delay={0.1}
+                />
+              </div>
               <AnimatedText
                 text="Get started with smart automation today and transform your business operations with proven workflows."
                 variant="paragraph"
