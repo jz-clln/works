@@ -81,7 +81,13 @@ export function AboutSection() {
                 />
 
                 <AnimatedText
-                  text="I help businesses automate their client communication and booking processes so they can save time, reduce no-shows, and grow revenue. I specialize in building smart workflows, AI chatbots, automated follow-ups, and seamless appointment systems. My goal is to make your operations smoother and give you more time to focus on what matters—serving your clients."
+                  text={
+                  <>
+                    I help business owners stop losing {" "}
+                    <span className="font-bold text-white">₱200k/year</span>{" "}
+                    to missed bookings and no-shows. Most businesses leak revenue from ignored DMs, manual scheduling, and forgotten follow-ups — I fix that with 24/7 booking automation so you recover lost income while your team focuses on clients, not admin work.
+                  </>
+                }
                   variant="paragraph"
                   className="text-sm sm:text-base md:text-lg text-blue-100 leading-relaxed max-w-2xl mx-auto lg:mx-0"
                   animation="fade"

@@ -96,8 +96,8 @@ export function AutomationSection() {
 
             <ScrollReveal delay={0.3}>
               <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                Discover how I've built GHL workflows to handle missed calls, re-engage cold leads, and reduce no
-                shows—so nothing slips through the cracks.
+                Discover how I've built automation workflows to handle missed calls, re-engage cold leads, and reduce no
+                shows—so you'll get back ₱200,000/year on revenue.
               </p>
             </ScrollReveal>
           </div>
