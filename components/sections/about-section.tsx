@@ -44,12 +44,12 @@ export function AboutSection() {
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-white/10 rounded-2xl blur-xl"></div>
-                <div className="relative w-64 h-80 sm:w-72 sm:h-90 md:w-80 md:h-96 lg:w-80 lg:h-96 rounded-2xl overflow-hidden border-4 border-white/30 shadow-2xl">
+                <div className="relative w-64 h-80 sm:w-72 sm:h-90 md:w-80 md:h-96 lg:w-72 lg:h-90 xl:w-80 xl:h-96 rounded-2xl overflow-hidden border-4 border-white/30 shadow-2xl">
                   <Image
                     src="/images/profile-photo.png"
                     alt="Jabez Collano - Business Automation Specialist"
                     fill
-                    className="object-cover"
+                    className="object-cover object-center"
                     priority
                   />
                 </div>

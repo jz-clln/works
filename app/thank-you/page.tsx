@@ -93,7 +93,7 @@ export default function ThankYouPage() {
                   <div className="flex flex-col items-center gap-2 p-4 rounded-lg bg-muted/30">
                     <MapPin className="h-5 w-5 text-blue-500" />
                     <div className="text-sm font-medium">Timezone</div>
-                    <div className="text-sm text-muted-foreground">Australia/Perth (GMT+8)</div>
+                    <div className="text-sm text-muted-foreground">Manila/Philippines (GMT+8)</div>
                   </div>
                 </div>
 

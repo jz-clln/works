@@ -28,7 +28,57 @@ export default function BookingPage() {
     message: "",
   })
 
-  const timeSlots = ["08:30 AM", "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM"]
+  // Get available time slots based on the selected date
+  const getAvailableTimeSlots = (date: number): string[] => {
+    if (!date) return []
+    
+    // Get the day of the week for the selected date
+    const selectedDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), date)
+    const dayOfWeek = selectedDate.getDay() // 0 = Sunday, 1 = Monday, etc.
+    
+    switch (dayOfWeek) {
+      case 0: // Sunday
+        return [] // Not Available
+      
+      case 1: // Monday - 1pm - 11pm (with 30min buffer: 1:30pm - 10:30pm)
+        return [
+          "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM",
+          "05:00 PM", "05:30 PM", "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM", "08:00 PM",
+          "08:30 PM", "09:00 PM", "09:30 PM", "10:00 PM", "10:30 PM"
+        ]
+      
+      case 2: // Tuesday - 1pm - 11pm (with 30min buffer: 1:30pm - 10:30pm)
+        return [
+          "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM",
+          "05:00 PM", "05:30 PM", "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM", "08:00 PM",
+          "08:30 PM", "09:00 PM", "09:30 PM", "10:00 PM", "10:30 PM"
+        ]
+      
+      case 3: // Wednesday - (1pm - 2pm), (9pm - 11pm) (with 30min buffer: 1:30pm - 1:30pm), (9:30pm - 10:30pm)
+        return ["01:30 PM", "09:30 PM", "10:00 PM", "10:30 PM"]
+      
+      case 4: // Thursday - (11am - 3pm), (9pm - 11pm) (with 30min buffer: 11:30am - 2:30pm), (9:30pm - 10:30pm)
+        return [
+          "11:30 AM", "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM",
+          "09:30 PM", "10:00 PM", "10:30 PM"
+        ]
+      
+      case 5: // Friday - (1pm - 5pm), (9pm - 11pm) (with 30min buffer: 1:30pm - 4:30pm), (9:30pm - 10:30pm)
+        return [
+          "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM",
+          "09:30 PM", "10:00 PM", "10:30 PM"
+        ]
+      
+      case 6: // Saturday - 8am - 3pm (with 30min buffer: 8:30am - 2:30pm)
+        return [
+          "08:30 AM", "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+          "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM"
+        ]
+      
+      default:
+        return []
+    }
+  }
 
   const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -111,12 +161,29 @@ export default function BookingPage() {
   const nextMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))
     setSelectedDate(null)
+    setSelectedTime(null)
   }
 
   const prevMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))
     setSelectedDate(null)
+    setSelectedTime(null)
   }
+
+  const handleDateSelect = (day: number) => {
+    setSelectedDate(day)
+    setSelectedTime(null) // Reset selected time when date changes
+  }
+
+  // Check if a day has availability
+  const isDayAvailable = (day: number): boolean => {
+    const testDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day)
+    const dayOfWeek = testDate.getDay()
+    return dayOfWeek !== 0 && day >= 8 // Not Sunday and not in the past
+  }
+
+  // Get current time slots based on selected date
+  const currentTimeSlots = selectedDate ? getAvailableTimeSlots(selectedDate) : []
 
   return (
     <main className="min-h-screen relative overflow-hidden">
@@ -195,46 +262,63 @@ export default function BookingPage() {
                           {emptyDays.map((_, index) => (
                             <div key={`empty-${index}`} className="p-2"></div>
                           ))}
-                          {days.map((day) => (
-                            <motion.button
-                              key={day}
-                              onClick={() => setSelectedDate(day)}
-                              className={`p-2 sm:p-3 text-xs sm:text-sm rounded-lg transition-all duration-200 hover:bg-blue-500/20 min-h-[40px] sm:min-h-[44px] ${
-                                selectedDate === day
-                                  ? "bg-blue-500 text-white"
-                                  : day === 8
-                                    ? "bg-blue-500/10 text-blue-400 font-medium"
-                                    : "hover:bg-muted/50"
-                              }`}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              disabled={day < 8}
-                            >
-                              {day}
-                            </motion.button>
-                          ))}
+                          {days.map((day) => {
+                            const isAvailable = isDayAvailable(day)
+                            const isSelected = selectedDate === day
+                            
+                            return (
+                              <motion.button
+                                key={day}
+                                onClick={() => isAvailable && handleDateSelect(day)}
+                                className={`p-2 sm:p-3 text-xs sm:text-sm rounded-lg transition-all duration-200 min-h-[40px] sm:min-h-[44px] ${
+                                  isSelected
+                                    ? "bg-blue-500 text-white"
+                                    : isAvailable
+                                      ? "hover:bg-blue-500/20 hover:bg-muted/50"
+                                      : "text-gray-400 cursor-not-allowed opacity-50"
+                                }`}
+                                whileHover={isAvailable ? { scale: 1.05 } : {}}
+                                whileTap={isAvailable ? { scale: 0.95 } : {}}
+                                disabled={!isAvailable}
+                              >
+                                {day}
+                              </motion.button>
+                            )
+                          })}
                         </div>
                       </div>
 
                       <div className="space-y-4 order-first lg:order-last">
                         <h4 className="text-base sm:text-lg font-heading font-semibold">Available Times</h4>
-                        <div className="grid grid-cols-2 sm:grid-cols-1 gap-2">
-                          {timeSlots.map((time) => (
-                            <motion.button
-                              key={time}
-                              onClick={() => setSelectedTime(time)}
-                              className={`w-full p-2.5 sm:p-3 text-xs sm:text-sm rounded-lg border transition-all duration-200 ${
-                                selectedTime === time
-                                  ? "bg-blue-500 text-white border-blue-500"
-                                  : "border-border hover:border-blue-500/50 hover:bg-blue-500/10"
-                              }`}
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                            >
-                              {time}
-                            </motion.button>
-                          ))}
-                        </div>
+                        {selectedDate ? (
+                          <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 max-h-64 overflow-y-auto">
+                            {currentTimeSlots.length > 0 ? (
+                              currentTimeSlots.map((time) => (
+                                <motion.button
+                                  key={time}
+                                  onClick={() => setSelectedTime(time)}
+                                  className={`w-full p-2.5 sm:p-3 text-xs sm:text-sm rounded-lg border transition-all duration-200 ${
+                                    selectedTime === time
+                                      ? "bg-blue-500 text-white border-blue-500"
+                                      : "border-border hover:border-blue-500/50 hover:bg-blue-500/10"
+                                  }`}
+                                  whileHover={{ scale: 1.02 }}
+                                  whileTap={{ scale: 0.98 }}
+                                >
+                                  {time}
+                                </motion.button>
+                              ))
+                            ) : (
+                              <div className="text-center text-sm text-muted-foreground py-4">
+                                No available times for this date
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="text-center text-sm text-muted-foreground py-4">
+                            Please select a date first
+                          </div>
+                        )}
 
                         <div className="pt-4 border-t border-border/50">
                           <div className="text-xs sm:text-sm text-muted-foreground mb-2">Time zone</div>
