@@ -18,7 +18,7 @@ export function CtaSection() {
               <AnimatedText
                 text="Ready to Automate Your Business?"
                 variant="heading"
-                className="text-3xl font-heading font-bold tracking-tighter sm:text-5xl gradient-text"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-tighter gradient-text break-words hyphens-none"
                 animation="wave"
               />
               <AnimatedText
